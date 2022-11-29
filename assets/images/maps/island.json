@@ -169,9 +169,31 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":4,
+         "name":"objects",
+         "objects":[
+                {
+                 "class":"",
+                 "height":16,
+                 "id":6,
+                 "name":"lamp",
+                 "rotation":0.299975162303919,
+                 "visible":true,
+                 "width":16,
+                 "x":320.125,
+                 "y":334.25
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":4,
- "nextobjectid":6,
+ "nextlayerid":5,
+ "nextobjectid":7,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",

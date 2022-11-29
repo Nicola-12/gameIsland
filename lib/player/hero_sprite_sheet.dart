@@ -7,7 +7,7 @@ class HeroSpriteSheet {
         'fHero.png',
         SpriteAnimationData.sequenced(
           amount: 4,
-          stepTime: 0.2,
+          stepTime: 0.15,
           textureSize: Vector2(24, 24),
           texturePosition: Vector2(96, 0),
         ),
@@ -17,7 +17,7 @@ class HeroSpriteSheet {
         'fHero.png',
         SpriteAnimationData.sequenced(
           amount: 4,
-          stepTime: 0.2,
+          stepTime: 0.15,
           textureSize: Vector2(24, 24),
           texturePosition: Vector2(0, 0),
         ),
@@ -27,7 +27,7 @@ class HeroSpriteSheet {
         'fHero.png',
         SpriteAnimationData.sequenced(
           amount: 4,
-          stepTime: 0.2,
+          stepTime: 0.15,
           textureSize: Vector2(24, 24),
           texturePosition: Vector2(96, 48),
         ),
@@ -37,7 +37,7 @@ class HeroSpriteSheet {
         'fHero.png',
         SpriteAnimationData.sequenced(
           amount: 4,
-          stepTime: 0.2,
+          stepTime: 0.15,
           textureSize: Vector2(24, 24),
           texturePosition: Vector2(0, 48),
         ),
@@ -57,7 +57,7 @@ class HeroSpriteSheet {
         SpriteAnimationData.sequenced(
           amount: 3,
           stepTime: 0.1,
-          textureSize: Vector2(16, 16)
+          textureSize: Vector2(16, 16),
         ),
       );
 
@@ -76,6 +76,46 @@ class HeroSpriteSheet {
           amount: 3,
           stepTime: 0.1,
           textureSize: Vector2(16, 16),
+        ),
+      );
+
+  static FutureOr<SpriteAnimation> get receiveDamageLeft => SpriteAnimation.load(
+        'fHero.png',
+        SpriteAnimationData.sequenced(
+          amount: 4,
+          stepTime: 0.1,
+          textureSize: Vector2(24, 24),
+          texturePosition: Vector2(96, 96),
+        ),
+      );
+
+  static FutureOr<SpriteAnimation> get receiveDamageRight => SpriteAnimation.load(
+        'fHero.png',
+        SpriteAnimationData.sequenced(
+          amount: 4,
+          stepTime: 0.1,
+          textureSize: Vector2(24, 24),
+          texturePosition: Vector2(0, 96),
+        ),
+      );
+
+      static FutureOr<SpriteAnimation> get dieLeft => SpriteAnimation.load(
+        'fHero.png',
+        SpriteAnimationData.sequenced(
+          amount: 4,
+          stepTime: 0.15,
+          textureSize: Vector2(24, 24),
+          texturePosition: Vector2(96, 120),
+        ),
+      );
+
+  static FutureOr<SpriteAnimation> get dieRight => SpriteAnimation.load(
+        'fHero.png',
+        SpriteAnimationData.sequenced(
+          amount: 4,
+          stepTime: 0.15,
+          textureSize: Vector2(24, 24),
+          texturePosition: Vector2(0, 120),
         ),
       );
 }

@@ -1,8 +1,12 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:game_island/main.dart';
 import 'package:game_island/player/hero_sprite_sheet.dart';
 
-class GameHero extends SimplePlayer with ObjectCollision {
+class GameHero extends SimplePlayer with ObjectCollision, Lighting {
+  bool canMove = true;
+
   GameHero(Vector2 position)
       : super(
           position: position,
@@ -17,24 +21,67 @@ class GameHero extends SimplePlayer with ObjectCollision {
         ) {
     setupCollision(
       CollisionConfig(
-        collisions: [
-          CollisionArea.rectangle(size: Vector2(8, 5), align: Vector2(4, 11))
-        ],
+        collisions: [CollisionArea.rectangle(size: Vector2(8, 5), align: Vector2(4, 11))],
       ),
     );
+
+    setupLighting(LightingConfig(
+      radius: tileSize.x * 1.5,
+      color: Colors.transparent,
+    ));
   }
 
   @override
   void joystickAction(JoystickActionEvent event) {
-    if (event.event == ActionEvent.DOWN && event.id == 1) {
+    if (event.event == ActionEvent.DOWN && (event.id == 1 || event.id == LogicalKeyboardKey.space.keyId)) {
       _executeAttack();
     }
     super.joystickAction(event);
   }
 
   @override
+  void joystickChangeDirectional(JoystickDirectionalEvent event) {
+    if (canMove) {
+      super.joystickChangeDirectional(event);
+    }
+  }
+
+  @override
+  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
+    canMove = false;
+
+    if (lastDirectionHorizontal == Direction.left) {
+      animation?.playOnce(
+        HeroSpriteSheet.receiveDamageLeft,
+        runToTheEnd: true,
+        onFinish: () => canMove = true,
+      );
+    } else {
+      animation?.playOnce(
+        HeroSpriteSheet.receiveDamageRight,
+        runToTheEnd: true,
+        onFinish: () => canMove = true,
+      );
+    }
+    super.receiveDamage(attacker, damage, identify);
+  }
+
+  @override
   void die() {
-    removeFromParent();
+    if (lastDirectionHorizontal == Direction.left) {
+      animation?.playOnce(
+        HeroSpriteSheet.dieLeft,
+        runToTheEnd: true,
+        onFinish: () => removeFromParent(),
+      );
+    } else {
+      animation?.playOnce(
+        HeroSpriteSheet.dieRight,
+        runToTheEnd: true,
+        onFinish: () => removeFromParent(),
+      );
+    }
+
     super.die();
   }
 

@@ -1,5 +1,6 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
+import 'package:game_island/decorations/bonfire_decoration.dart';
 import 'package:game_island/enemies/troll.dart';
 import 'package:game_island/player/game_hero.dart';
 
@@ -31,7 +32,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BonfireWidget(
+      // joystick: JoystickMoveToPosition(),
       joystick: Joystick(
+        keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
         directional: JoystickDirectional(color: Colors.orange.shade300),
         actions: [
           JoystickAction(
@@ -45,6 +48,7 @@ class HomePage extends StatelessWidget {
         'maps/island.json',
         objectsBuilder: {
           'troll': (properties) => Troll(properties.position),
+          'lamp':(properties) => BonfireDecoration(properties.position),
         },
       ),
       player: GameHero(
@@ -53,8 +57,10 @@ class HomePage extends StatelessWidget {
       cameraConfig: CameraConfig(
         moveOnlyMapArea: true,
         zoom: 2.5,
+        smoothCameraEnabled: true,
         sizeMovementWindow: Vector2(tileSize.x * 3, tileSize.y * 3),
       ),
+      lightingColorGame: Colors.black.withOpacity(0.8),
       // showCollisionArea: true,
     );
   }

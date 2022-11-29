@@ -7,7 +7,7 @@ class TrollSpriteSheet {
         'troll_.png',
         SpriteAnimationData.sequenced(
           amount: 4,
-          stepTime: 0.2,
+          stepTime: 0.15,
           textureSize: Vector2(24, 24),
           texturePosition: Vector2(96, 0),
         ),
@@ -17,7 +17,7 @@ class TrollSpriteSheet {
         'troll_.png',
         SpriteAnimationData.sequenced(
           amount: 4,
-          stepTime: 0.2,
+          stepTime: 0.15,
           textureSize: Vector2(24, 24),
           texturePosition: Vector2(0, 0),
         ),
@@ -27,7 +27,7 @@ class TrollSpriteSheet {
         'troll_.png',
         SpriteAnimationData.sequenced(
           amount: 4,
-          stepTime: 0.2,
+          stepTime: 0.15,
           textureSize: Vector2(24, 24),
           texturePosition: Vector2(96, 48),
         ),
@@ -37,7 +37,7 @@ class TrollSpriteSheet {
         'troll_.png',
         SpriteAnimationData.sequenced(
           amount: 4,
-          stepTime: 0.2,
+          stepTime: 0.15,
           textureSize: Vector2(24, 24),
           texturePosition: Vector2(0, 48),
         ),
@@ -47,7 +47,7 @@ class TrollSpriteSheet {
         'troll_.png',
         SpriteAnimationData.sequenced(
           amount: 4,
-          stepTime: 0.2,
+          stepTime: 0.15,
           textureSize: Vector2(24, 24),
           texturePosition: Vector2(96, 96),
         ),
@@ -57,18 +57,38 @@ class TrollSpriteSheet {
         'troll_.png',
         SpriteAnimationData.sequenced(
           amount: 4,
-          stepTime: 0.2,
+          stepTime: 0.15,
           textureSize: Vector2(24, 24),
           texturePosition: Vector2(0, 96),
         ),
       );
 
   static Future<SpriteAnimation> get attackRight => SpriteAnimation.load(
-    'attacks/attack_effect_right.png',
-    SpriteAnimationData.sequenced(
-      amount: 3,
-      stepTime: 0.1,
-      textureSize: Vector2(16, 16),
-    ),
-  );
+        'attacks/attack_effect_right.png',
+        SpriteAnimationData.sequenced(
+          amount: 3,
+          stepTime: 0.1,
+          textureSize: Vector2(16, 16),
+        ),
+      );
+
+  static FutureOr<SpriteAnimation> get dieLeft => SpriteAnimation.load(
+        'troll_.png',
+        SpriteAnimationData.sequenced(
+          amount: 4,
+          stepTime: 0.15,
+          textureSize: Vector2(24, 24),
+          texturePosition: Vector2(96, 120),
+        ),
+      );
+
+  static FutureOr<SpriteAnimation> get dieRight => SpriteAnimation.load(
+        'troll_.png',
+        SpriteAnimationData.sequenced(
+          amount: 4,
+          stepTime: 0.15,
+          textureSize: Vector2(24, 24),
+          texturePosition: Vector2(0, 120),
+        ),
+      );
 }

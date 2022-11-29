@@ -21,9 +21,7 @@ class Troll extends SimpleEnemy with ObjectCollision, UseBarLife {
         ) {
     setupCollision(
       CollisionConfig(
-        collisions: [
-          CollisionArea.rectangle(size: Vector2(8, 5), align: Vector2(4, 11))
-        ],
+        collisions: [CollisionArea.rectangle(size: Vector2(8, 5), align: Vector2(4, 11))],
       ),
     );
 
@@ -79,7 +77,20 @@ class Troll extends SimpleEnemy with ObjectCollision, UseBarLife {
 
   @override
   void die() {
-    removeFromParent();
+    if (lastDirectionHorizontal == Direction.left) {
+      animation?.playOnce(
+        TrollSpriteSheet.dieLeft,
+        runToTheEnd: true,
+        onFinish: () => removeFromParent(),
+      );
+    } else {
+      animation?.playOnce(
+        TrollSpriteSheet.dieRight,
+        runToTheEnd: true,
+        onFinish: () => removeFromParent(),
+      );
+    }
+
     super.die();
   }
 }
