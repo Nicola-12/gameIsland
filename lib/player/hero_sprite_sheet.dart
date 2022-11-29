@@ -42,4 +42,40 @@ class HeroSpriteSheet {
           texturePosition: Vector2(0, 48),
         ),
       );
+
+  static Future<SpriteAnimation> get attackRight => SpriteAnimation.load(
+        'attacks/attack_effect_right.png',
+        SpriteAnimationData.sequenced(
+          amount: 3,
+          stepTime: 0.1,
+          textureSize: Vector2(16, 16),
+        ),
+      );
+
+  static FutureOr<SpriteAnimation> get attackLeft => SpriteAnimation.load(
+        'attacks/attack_effect_left.png',
+        SpriteAnimationData.sequenced(
+          amount: 3,
+          stepTime: 0.1,
+          textureSize: Vector2(16, 16)
+        ),
+      );
+
+  static FutureOr<SpriteAnimation> get attackBottom => SpriteAnimation.load(
+        'attacks/attack_effect_bottom.png',
+        SpriteAnimationData.sequenced(
+          amount: 3,
+          stepTime: 0.1,
+          textureSize: Vector2(16, 16),
+        ),
+      );
+
+  static FutureOr<SpriteAnimation> get attackTop => SpriteAnimation.load(
+        'attacks/attack_effect_top.png',
+        SpriteAnimationData.sequenced(
+          amount: 3,
+          stepTime: 0.1,
+          textureSize: Vector2(16, 16),
+        ),
+      );
 }

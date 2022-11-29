@@ -32,11 +32,18 @@ class GameHero extends SimplePlayer with ObjectCollision {
     super.joystickAction(event);
   }
 
+  @override
+  void die() {
+    removeFromParent();
+    super.die();
+  }
+
   void _executeAttack() {
     simpleAttackMelee(
       damage: 20,
-      size: size,
+      size: tileSize,
       sizePush: tileSize.x / 2,
+      animationRight: HeroSpriteSheet.attackRight,
     );
   }
 }
