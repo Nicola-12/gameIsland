@@ -34,35 +34,54 @@ class _PlayerInterfaceState extends State<PlayerInterface> {
         padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
         child: Row(
           children: [
-            Container(
-              height: 25,
-              width: 25,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-            const SizedBox(width: 10),
             Stack(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               children: [
                 Container(
-                  width: widget.game.player?.maxLife,
-                  height: 15,
+                  height: 35,
+                  width: 35,
                   decoration: BoxDecoration(
-                    color: Colors.white12,
-                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.yellow.shade400,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.black, width: 1),
                   ),
                 ),
                 Container(
-                  width: currentWidth,
-                  height: 15,
+                  height: 30,
+                  width: 30,
                   decoration: BoxDecoration(
-                    color: Colors.redAccent,
-                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.brown.shade200,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.black, width: 1),
                   ),
+                  child: const Icon(Icons.heart_broken, color: Colors.red, size: 20),
                 ),
               ],
+            ),
+            Container(
+              width: widget.game.player?.maxLife,
+              height: 20,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(204, 0, 0, 0),
+                border: Border.all(color: Colors.black),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.yellow.shade400,
+                    spreadRadius: 1.5,
+                  )
+                ],
+              ),
+              child: Stack(
+                clipBehavior: Clip.hardEdge,
+                alignment: Alignment.centerLeft,
+                children: [
+                  Container(
+                    width: currentWidth,
+                    height: 20,
+                    color: Colors.redAccent,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
