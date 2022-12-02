@@ -40,7 +40,7 @@ class Troll extends SimpleEnemy with ObjectCollision, UseBarLife {
     if (canMove) {
       seeAndMoveToPlayer(
         closePlayer: (player) => _executeAttack(),
-        radiusVision: tileSize.x * 1.5,
+        radiusVision: tileSize.x * 2,
         margin: 4,
       );
     }
@@ -68,7 +68,7 @@ class Troll extends SimpleEnemy with ObjectCollision, UseBarLife {
 
   void _executeAttack() {
     simpleAttackMelee(
-      damage: 20,
+      damage: 10,
       size: tileSize,
       sizePush: tileSize.x / 2,
       animationRight: TrollSpriteSheet.attackRight,

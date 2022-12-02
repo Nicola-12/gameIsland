@@ -1,6 +1,8 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:game_island/decorations/bonfire_decoration.dart';
+import 'package:game_island/decorations/chest.dart';
+import 'package:game_island/decorations/potion.dart';
 import 'package:game_island/enemies/troll.dart';
 import 'package:game_island/interface/player_interface.dart';
 import 'package:game_island/player/game_hero.dart';
@@ -36,11 +38,11 @@ class HomePage extends StatelessWidget {
       // joystick: JoystickMoveToPosition(),
       joystick: Joystick(
         keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
-        directional: JoystickDirectional(color: Colors.orange.shade300),
+        directional: JoystickDirectional(color: Colors.orange.shade200),
         actions: [
           JoystickAction(
             actionId: 1,
-            color: Colors.orange.shade300,
+            color: Colors.orange.shade200,
             margin: const EdgeInsets.all(40),
           ),
         ],
@@ -50,6 +52,8 @@ class HomePage extends StatelessWidget {
         objectsBuilder: {
           'troll': (properties) => Troll(properties.position),
           'lamp': (properties) => BonfireDecoration(properties.position),
+          'chest': (properties) => Chest(properties.position),
+          'potion': (properties) => Potion(properties.position),
         },
       ),
       initialActiveOverlays: const [

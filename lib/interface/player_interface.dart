@@ -50,17 +50,17 @@ class _PlayerInterfaceState extends State<PlayerInterface> {
                   height: 30,
                   width: 30,
                   decoration: BoxDecoration(
-                    color: Colors.brown.shade200,
+                    color: Colors.brown.shade100,
                     borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: Colors.black, width: 1),
                   ),
-                  child: const Icon(Icons.heart_broken, color: Colors.red, size: 20),
+                  child: Image.asset('assets/images/heart.png'),
                 ),
               ],
             ),
             Container(
               width: widget.game.player?.maxLife,
-              height: 20,
+              height: 15,
               decoration: BoxDecoration(
                 color: const Color.fromARGB(204, 0, 0, 0),
                 border: Border.all(color: Colors.black),
@@ -75,9 +75,10 @@ class _PlayerInterfaceState extends State<PlayerInterface> {
                 clipBehavior: Clip.hardEdge,
                 alignment: Alignment.centerLeft,
                 children: [
-                  Container(
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
                     width: currentWidth,
-                    height: 20,
+                    height: 15,
                     color: Colors.redAccent,
                   ),
                 ],

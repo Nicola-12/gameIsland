@@ -1,0 +1,14 @@
+{ "columns":10,
+ "image":"..\/shiny_potions.png",
+ "imageheight":160,
+ "imagewidth":160,
+ "margin":0,
+ "name":"shiny_potions",
+ "spacing":0,
+ "tilecount":100,
+ "tiledversion":"1.9.2",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.9"
+}

@@ -163,6 +163,17 @@
                  "width":16,
                  "x":435.666666666667,
                  "y":314.666666666667
+                }, 
+                {
+                 "class":"",
+                 "height":16,
+                 "id":7,
+                 "name":"chest",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":304.333333333333,
+                 "y":400.333333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -185,6 +196,17 @@
                  "width":16,
                  "x":320.125,
                  "y":334.25
+                }, 
+                {
+                 "class":"",
+                 "height":16,
+                 "id":9,
+                 "name":"potion",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":184,
+                 "y":269
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -193,7 +215,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":7,
+ "nextobjectid":11,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
