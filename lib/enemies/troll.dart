@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:bonfire/bonfire.dart';
-import 'package:game_island/enemies/troll_sprite_sheet.dart';
+import 'package:game_island/sprite_sheets/troll_sprite_sheet.dart';
 import 'package:game_island/main.dart';
 
-class Troll extends SimpleEnemy with ObjectCollision, UseBarLife {
+class Troll extends SimpleEnemy with ObjectCollision, UseBarLife, AutomaticRandomMovement {
   bool canMove = true;
 
   Troll(Vector2 position)
@@ -13,15 +13,18 @@ class Troll extends SimpleEnemy with ObjectCollision, UseBarLife {
           size: tileSize,
           animation: SimpleDirectionAnimation(
             idleRight: TrollSpriteSheet.idleRight,
-            idleLeft: TrollSpriteSheet.idleLeft,
             runRight: TrollSpriteSheet.runRight,
-            runLeft: TrollSpriteSheet.runLeft,
           ),
           speed: 30,
         ) {
     setupCollision(
       CollisionConfig(
-        collisions: [CollisionArea.rectangle(size: Vector2(8, 5), align: Vector2(4, 11))],
+        collisions: [
+          CollisionArea.rectangle(
+            size: Vector2(8, 5),
+            align: Vector2(4, 11),
+          ),
+        ],
       ),
     );
 
@@ -38,12 +41,18 @@ class Troll extends SimpleEnemy with ObjectCollision, UseBarLife {
   @override
   void update(double dt) {
     if (canMove) {
-      seeAndMoveToPlayer(
-        closePlayer: (player) => _executeAttack(),
-        radiusVision: tileSize.x * 2,
-        margin: 4,
+      seePlayer(
+        observed: (player) {
+          seeAndMoveToPlayer(
+            closePlayer: (player) => _executeAttack(),
+            radiusVision: tileSize.x * 2,
+            margin: 4,
+          );
+        },
+        notObserved: () => runRandomMovement(dt),
       );
     }
+
     super.update(dt);
   }
 

@@ -2,23 +2,21 @@ import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:game_island/main.dart';
-import 'package:game_island/player/hero_sprite_sheet.dart';
+import 'package:game_island/sprite_sheets/hero_sprite_sheet.dart';
 
-class GameHero extends SimplePlayer with ObjectCollision, Lighting {
+class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
   bool canMove = true;
 
   GameHero(Vector2 position)
       : super(
-          position: position,
-          size: tileSize,
-          animation: SimpleDirectionAnimation(
-            idleRight: HeroSpriteSheet.idleRight,
-            idleLeft: HeroSpriteSheet.idleLeft,
-            runRight: HeroSpriteSheet.runRight,
-            runLeft: HeroSpriteSheet.runLeft,
-          ),
-          speed: 50,
-        ) {
+    position: position,
+    size: tileSize,
+    animation: SimpleDirectionAnimation(
+      idleRight: HeroSpriteSheet.idleRight,
+      runRight: HeroSpriteSheet.runRight,
+    ),
+    speed: 50,
+  ) {
     setupCollision(
       CollisionConfig(
         collisions: [CollisionArea.rectangle(size: Vector2(8, 5), align: Vector2(4, 11))],
@@ -92,5 +90,27 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting {
       sizePush: tileSize.x / 2,
       animationRight: HeroSpriteSheet.attackRight,
     );
+  }
+
+  @override
+  void onTap() {
+    if (FollowerWidget.isVisible('identify')) {
+      FollowerWidget.remove('identify');
+    } else {
+      FollowerWidget.show(
+        identify: 'identify',
+        context: context,
+        target: this,
+        align: Offset(0, 40),
+        child: Card(
+          child: Column(
+            children: [
+              Icon(Icons.add),
+              Text('data'),
+            ],
+          ),
+        ),
+      );
+    }
   }
 }

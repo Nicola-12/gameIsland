@@ -2,12 +2,14 @@ import 'dart:ui';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-import 'package:game_island/decorations/decoration_sprite_sheet.dart';
+import 'package:game_island/sprite_sheets/decoration_sprite_sheet.dart';
+import 'package:game_island/decorations/potion.dart';
 import 'package:game_island/main.dart';
 import 'package:game_island/player/game_hero.dart';
 
 class Chest extends GameDecoration with ObjectCollision, TapGesture {
   bool _playerIsClose = false;
+  bool _open = false;
 
   Sprite? chest, chestOpen;
 
@@ -21,7 +23,7 @@ class Chest extends GameDecoration with ObjectCollision, TapGesture {
       CollisionConfig(
         collisions: [
           CollisionArea.rectangle(
-            size: Vector2(16, 16),
+            size: Vector2(16, 12),
             align: Vector2(0, 16),
           )
         ],
@@ -33,16 +35,19 @@ class Chest extends GameDecoration with ObjectCollision, TapGesture {
   void update(double dt) {
     seeComponentType<GameHero>(
       observed: (player) {
-        if (!_playerIsClose) {
+        if (!_playerIsClose && !_open) {
           _playerIsClose = true;
           sprite = chestOpen;
         }
       },
       notObserved: () {
-        _playerIsClose = false;
-        sprite = chest;
+        if (!_open) {
+          _playerIsClose = false;
+          sprite = chest;
+        }
       },
-      radiusVision: tileSize.x,
+      radiusVision: tileSize.x + 4,
+      angle: 2,
     );
     super.update(dt);
   }
@@ -60,10 +65,10 @@ class Chest extends GameDecoration with ObjectCollision, TapGesture {
 
   @override
   void onTap() {
-    if (_playerIsClose) {
-      _showDialog();
+    if (_playerIsClose && !_open) {
+      // _showDialog();
+      _open = true;
+      gameRef.add(Potion(transform.position.translate(tileSize.x, 0)));
     }
   }
-
-
 }
