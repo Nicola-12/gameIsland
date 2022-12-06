@@ -1,10 +1,6 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:game_island/controllers/game_island_controller.dart';
-import 'package:game_island/decorations/bonfire_decoration.dart';
-import 'package:game_island/decorations/chest.dart';
-import 'package:game_island/decorations/potion.dart';
-import 'package:game_island/enemies/troll.dart';
 import 'package:game_island/interface/player_interface.dart';
 import 'package:game_island/main.dart';
 import 'package:game_island/player/game_hero.dart';
@@ -13,11 +9,11 @@ import 'package:game_island/util/game_utilities.dart';
 enum GameStage { forestStage, dungeon }
 
 class Game extends StatefulWidget {
-  static Route route({GameStage stage = GameStage.dungeon}) => MaterialPageRoute(
+  static Route route({GameStage stage = GameStage.forestStage}) => MaterialPageRoute(
         builder: (context) => Game(stage: stage),
       );
 
-  const Game({Key? key, this.stage = GameStage.dungeon}) : super(key: key);
+  const Game({Key? key, this.stage = GameStage.forestStage}) : super(key: key);
 
   final GameStage stage;
 
