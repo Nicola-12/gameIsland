@@ -13,7 +13,10 @@ import 'package:game_island/player/game_hero.dart';
 
 Vector2 get tileSize => Vector2(16, 16);
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Flame.device.setLandscape();
   runApp(const MyApp());
 }
 

@@ -30,4 +30,11 @@ flutter:
   assets:
     - assets/images/
     - assets/images/maps/
+    - assets/images/maps/dungeon/
+    - assets/images/maps/forest/
     - assets/images/attacks/
+
+  fonts:
+    - family: Common Pixel
+      fonts:
+        - asset: assets/fonts/pixel.ttf

@@ -16,7 +16,7 @@ class GameIslandController extends GameComponent {
       if (gameRef.livingEnemies().isEmpty && !endGame) {
         endGame = true;
 
-        _showDialog('Map cleared!!', 'Next stage', () => _goToStage(GameStage.nextStage));
+        _showDialog('Map cleared!!', 'Next stage', () => _goToStage(GameStage.dungeon));
       }
     }
 
@@ -33,7 +33,7 @@ class GameIslandController extends GameComponent {
   void _goToStage(GameStage stage) {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
-        builder: (context) => const Game(stage: GameStage.nextStage),
+        builder: (context) => Game(stage: stage),
       ),
       (route) => false,
     );

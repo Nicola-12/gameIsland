@@ -1,38 +1,45 @@
+import 'dart:async';
+
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:game_island/main.dart';
 import 'package:game_island/sprite_sheets/hero_sprite_sheet.dart';
 
-class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
+class GameHero extends SimplePlayer with ObjectCollision, Lighting {
   bool canMove = true;
 
   GameHero(Vector2 position)
       : super(
-    position: position,
-    size: tileSize,
-    animation: SimpleDirectionAnimation(
-      idleRight: HeroSpriteSheet.idleRight,
-      runRight: HeroSpriteSheet.runRight,
-    ),
-    speed: 50,
-  ) {
+          position: position,
+          size: tileSize,
+          animation: SimpleDirectionAnimation(
+            idleRight: HeroSpriteSheet.idleRight,
+            runRight: HeroSpriteSheet.runRight,
+          ),
+          speed: 50,
+        ) {
     setupCollision(
       CollisionConfig(
-        collisions: [CollisionArea.rectangle(size: Vector2(8, 5), align: Vector2(4, 11))],
+        collisions: [
+          CollisionArea.rectangle(
+            size: Vector2(8, 5),
+            align: Vector2(4, 11),
+          ),
+        ],
       ),
     );
 
     setupLighting(LightingConfig(
-      radius: tileSize.x * 1.5,
+      radius: tileSize.x * 0.7,
       color: Colors.transparent,
     ));
   }
 
   @override
-  void joystickAction(JoystickActionEvent event) {
+  void joystickAction(JoystickActionEvent event) async {
     if (event.event == ActionEvent.DOWN && (event.id == 1 || event.id == LogicalKeyboardKey.space.keyId)) {
-      _executeAttack();
+      await _executeAttack();
     }
     super.joystickAction(event);
   }
@@ -45,17 +52,17 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
   }
 
   @override
-  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
+  Future<void> receiveDamage(AttackFromEnum attacker, double damage, identify) async {
     canMove = false;
 
     if (lastDirectionHorizontal == Direction.left) {
-      animation?.playOnce(
+      await animation?.playOnce(
         HeroSpriteSheet.receiveDamageLeft,
         runToTheEnd: true,
         onFinish: () => canMove = true,
       );
     } else {
-      animation?.playOnce(
+      await animation?.playOnce(
         HeroSpriteSheet.receiveDamageRight,
         runToTheEnd: true,
         onFinish: () => canMove = true,
@@ -65,15 +72,15 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
   }
 
   @override
-  void die() {
+  void die() async {
     if (lastDirectionHorizontal == Direction.left) {
-      animation?.playOnce(
+      await animation?.playOnce(
         HeroSpriteSheet.dieLeft,
         runToTheEnd: true,
         onFinish: () => removeFromParent(),
       );
     } else {
-      animation?.playOnce(
+      await animation?.playOnce(
         HeroSpriteSheet.dieRight,
         runToTheEnd: true,
         onFinish: () => removeFromParent(),
@@ -83,34 +90,14 @@ class GameHero extends SimplePlayer with ObjectCollision, Lighting, TapGesture {
     super.die();
   }
 
-  void _executeAttack() {
+  FutureOr<void> _executeAttack() async {
     simpleAttackMelee(
       damage: 20,
-      size: tileSize,
+      size: tileSize.copyWith(x: 8, y: 8),
       sizePush: tileSize.x / 2,
       animationRight: HeroSpriteSheet.attackRight,
     );
-  }
 
-  @override
-  void onTap() {
-    if (FollowerWidget.isVisible('identify')) {
-      FollowerWidget.remove('identify');
-    } else {
-      FollowerWidget.show(
-        identify: 'identify',
-        context: context,
-        target: this,
-        align: Offset(0, 40),
-        child: Card(
-          child: Column(
-            children: [
-              Icon(Icons.add),
-              Text('data'),
-            ],
-          ),
-        ),
-      );
-    }
+    await Future.delayed(const Duration(milliseconds: 2000));
   }
 }

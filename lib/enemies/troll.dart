@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:bonfire/bonfire.dart';
+import 'package:flutter/material.dart';
 import 'package:game_island/sprite_sheets/troll_sprite_sheet.dart';
 import 'package:game_island/main.dart';
 
@@ -40,7 +41,7 @@ class Troll extends SimpleEnemy with ObjectCollision, UseBarLife, AutomaticRando
 
   @override
   void update(double dt) {
-    if (canMove) {
+    if (canMove && !isDead) {
       seePlayer(
         observed: (player) {
           seeAndMoveToPlayer(
@@ -49,7 +50,11 @@ class Troll extends SimpleEnemy with ObjectCollision, UseBarLife, AutomaticRando
             margin: 4,
           );
         },
-        notObserved: () => runRandomMovement(dt),
+        notObserved: () => runRandomMovement(
+          dt,
+          speed: 10,
+          maxDistance: 30,
+        ),
       );
     }
 
@@ -57,43 +62,59 @@ class Troll extends SimpleEnemy with ObjectCollision, UseBarLife, AutomaticRando
   }
 
   @override
-  void receiveDamage(AttackFromEnum attacker, double damage, identify) {
-    canMove = false;
-    if (lastDirectionHorizontal == Direction.left) {
-      animation?.playOnce(
-        TrollSpriteSheet.receiveDamageLeft,
-        runToTheEnd: true,
-        onFinish: () => canMove = true,
+  void receiveDamage(AttackFromEnum attacker, double damage, identify) async {
+    if (!isDead) {
+      showDamage(
+        damage,
+        initVelocityTop: -2,
+        gravity: 0.7,
+        config: const TextStyle(
+          fontSize: 9,
+          fontStyle: FontStyle.italic,
+          fontWeight: FontWeight.w400,
+          color: Colors.redAccent,
+        ),
       );
-    } else {
-      animation?.playOnce(
-        TrollSpriteSheet.receiveDamageRight,
-        runToTheEnd: true,
-        onFinish: () => canMove = true,
-      );
+
+      if (lastDirectionHorizontal == Direction.left) {
+        await animation?.playOnce(
+          TrollSpriteSheet.receiveDamageLeft,
+          onStart: () => canMove = false,
+          runToTheEnd: true,
+          onFinish: () => canMove = true,
+        );
+      } else {
+        await animation?.playOnce(
+          TrollSpriteSheet.receiveDamageRight,
+          onStart: () => canMove = false,
+          runToTheEnd: true,
+          onFinish: () => canMove = true,
+        );
+      }
+      super.receiveDamage(attacker, damage, identify);
     }
-    super.receiveDamage(attacker, damage, identify);
   }
 
   void _executeAttack() {
     simpleAttackMelee(
       damage: 10,
-      size: tileSize,
+      size: Vector2(8, 8),
+      interval: 2000,
       sizePush: tileSize.x / 2,
       animationRight: TrollSpriteSheet.attackRight,
     );
   }
 
   @override
-  void die() {
+  void die() async {
     if (lastDirectionHorizontal == Direction.left) {
-      animation?.playOnce(
+      await animation?.playOnce(
         TrollSpriteSheet.dieLeft,
         runToTheEnd: true,
         onFinish: () => removeFromParent(),
       );
     } else {
-      animation?.playOnce(
+      await animation?.playOnce(
         TrollSpriteSheet.dieRight,
         runToTheEnd: true,
         onFinish: () => removeFromParent(),

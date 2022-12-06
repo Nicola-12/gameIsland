@@ -8,11 +8,16 @@ import 'package:game_island/enemies/troll.dart';
 import 'package:game_island/interface/player_interface.dart';
 import 'package:game_island/main.dart';
 import 'package:game_island/player/game_hero.dart';
+import 'package:game_island/util/game_utilities.dart';
 
-enum GameStage { forestStage, nextStage }
+enum GameStage { forestStage, dungeon }
 
 class Game extends StatefulWidget {
-  const Game({Key? key, this.stage = GameStage.forestStage}) : super(key: key);
+  static Route route({GameStage stage = GameStage.dungeon}) => MaterialPageRoute(
+        builder: (context) => Game(stage: stage),
+      );
+
+  const Game({Key? key, this.stage = GameStage.dungeon}) : super(key: key);
 
   final GameStage stage;
 
@@ -27,44 +32,40 @@ class _GameState extends State<Game> {
       // joystick: JoystickMoveToPosition(),
       joystick: Joystick(
         keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
-        directional: JoystickDirectional(color: Colors.orange.shade200),
+        directional: JoystickDirectional(
+          color: Colors.orange.shade200,
+          spriteBackgroundDirectional: Sprite.load('joystick_background.png'),
+          spriteKnobDirectional: Sprite.load('joystick_knob.png'),
+        ),
         actions: [
           JoystickAction(
             actionId: 1,
+            size: 70,
+            sprite: Sprite.load('joystick_attack.png'),
             color: Colors.orange.shade200,
-            margin: const EdgeInsets.all(40),
+            margin: const EdgeInsets.only(bottom: 60, right: 40),
           ),
         ],
       ),
-      map: WorldMapByTiled(
-        'maps/island.json',
-        objectsBuilder: {
-          'troll': (properties) => Troll(properties.position),
-          'lamp': (properties) => BonfireDecoration(properties.position),
-          'chest': (properties) => Chest(properties.position),
-          'potion': (properties) => Potion(properties.position),
-        },
-      ),
+      map: GameUtilities.getMapFromStage(widget.stage),
       initialActiveOverlays: const [
         PlayerInterface.overlayKey,
       ],
       components: [
         GameIslandController(widget.stage),
       ],
-      player: GameHero(
-        Vector2(19 * tileSize.x, 13 * tileSize.y),
-      ),
+      player: GameHero(GameUtilities.getPlayerPosition(widget.stage)),
       cameraConfig: CameraConfig(
         moveOnlyMapArea: true,
         zoom: 2.5,
         // smoothCameraEnabled: true,
         sizeMovementWindow: Vector2(tileSize.x * 3, tileSize.y * 3),
       ),
-      lightingColorGame: Colors.black.withOpacity(0.8),
+      lightingColorGame: Colors.black.withOpacity(0.4),
       overlayBuilderMap: {
         PlayerInterface.overlayKey: (context, game) => PlayerInterface(game: game),
       },
-      // showCollisionArea: true,
+      showCollisionArea: true,
     );
   }
 }
