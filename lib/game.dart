@@ -9,11 +9,11 @@ import 'package:game_island/util/game_utilities.dart';
 enum GameStage { forestStage, dungeon }
 
 class Game extends StatefulWidget {
-  static Route route({GameStage stage = GameStage.forestStage}) => MaterialPageRoute(
+  static Route route({GameStage stage = GameStage.dungeon}) => MaterialPageRoute(
         builder: (context) => Game(stage: stage),
       );
 
-  const Game({Key? key, this.stage = GameStage.forestStage}) : super(key: key);
+  const Game({Key? key, this.stage = GameStage.dungeon}) : super(key: key);
 
   final GameStage stage;
 
