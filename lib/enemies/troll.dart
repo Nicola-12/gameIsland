@@ -69,7 +69,7 @@ class Troll extends SimpleEnemy with ObjectCollision, UseBarLife, AutomaticRando
         initVelocityTop: -2,
         gravity: 0.7,
         config: const TextStyle(
-          fontSize: 9,
+          fontSize: 5,
           fontStyle: FontStyle.italic,
           fontWeight: FontWeight.w400,
           color: Colors.redAccent,

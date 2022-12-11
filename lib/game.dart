@@ -57,11 +57,11 @@ class _GameState extends State<Game> {
         // smoothCameraEnabled: true,
         sizeMovementWindow: Vector2(tileSize.x * 3, tileSize.y * 3),
       ),
-      lightingColorGame: Colors.black.withOpacity(0.4),
+      lightingColorGame: GameUtilities.getColorGame(widget.stage),
       overlayBuilderMap: {
         PlayerInterface.overlayKey: (context, game) => PlayerInterface(game: game),
       },
-      showCollisionArea: true,
+      // showCollisionArea: true,
     );
   }
 }

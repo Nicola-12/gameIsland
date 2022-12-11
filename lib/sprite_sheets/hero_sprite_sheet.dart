@@ -17,7 +17,7 @@ class HeroSpriteSheet {
         'fHero.png',
         SpriteAnimationData.sequenced(
           amount: 4,
-          stepTime: 0.15,
+          stepTime: 0.25,
           textureSize: Vector2(24, 24),
           texturePosition: Vector2(0, 0),
         ),
